@@ -20,7 +20,7 @@ class CinemaRoomTest {
     void canCreateCinemaRoom(){
         assertThat(cinemaRoom).isNotNull();
         assertThat(cinemaRoom.getMovieName()).isEqualTo("The Dark Knight");
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(50);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(50);
         assertThat(cinemaRoom.getReservedSeats()).isEmpty();
     }
 
@@ -55,15 +55,15 @@ class CinemaRoomTest {
     @Test
     void reserveConsecutiveSeatsInEmptyRoom() {
         // build
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(50);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(50);
         assertThat(cinemaRoom.getReservedSeats()).isEmpty();
 
         // operate
         List<Seat> reservedConsecutiveSeats = cinemaRoom.reserveConsecutiveSeats(5);
 
         // test
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(45);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(5);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(45);
+        assertThat(cinemaRoom.getReservedSeats()).hasSize(5);
 
         assertThat(reservedConsecutiveSeats).containsExactly(new Seat(1,1),
                                                                 new Seat(1,2),
@@ -77,15 +77,15 @@ class CinemaRoomTest {
     void reserveTheNextConsecutiveSeatsInABigRow() {
         // build
         cinemaRoom.reserveConsecutiveSeats(5);
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(45);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(5);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(45);
+        assertThat(cinemaRoom.getReservedSeats()).hasSize(5);
 
         // operate
         List<Seat> reservedConsecutiveSeats = cinemaRoom.reserveConsecutiveSeats(3);
 
         // test
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(42);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(8);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(42);
+        assertThat(cinemaRoom.getReservedSeats()).hasSize(8);
 
         assertThat(reservedConsecutiveSeats).containsExactly(new Seat(1,6),
                 new Seat(1,7),
@@ -97,15 +97,15 @@ class CinemaRoomTest {
     void reserveTheNextConsecutiveSeatsAndFillTheEntireRow() {
         // build
         cinemaRoom.reserveConsecutiveSeats(5);
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(45);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(5);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(45);
+        assertThat(cinemaRoom.getReservedSeats()).hasSize(5);
 
         // operate
         List<Seat> reservedConsecutiveSeats = cinemaRoom.reserveConsecutiveSeats(5);
 
         // test
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(40);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(10);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(40);
+        assertThat(cinemaRoom.getReservedSeats()).hasSize(10);
 
         assertThat(reservedConsecutiveSeats).containsExactly(new Seat(1,6),
                                                             new Seat(1,7),
@@ -119,15 +119,15 @@ class CinemaRoomTest {
     void reserveTheNextConsecutiveSeats_NoSpaceAnymoreInTheRow_ReserveInNextRow() {
         // build
         cinemaRoom.reserveConsecutiveSeats(8);
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(42);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(8);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(42);
+        assertThat(cinemaRoom.getReservedSeats()).hasSize(8);
 
         // operate
         List<Seat> reservedConsecutiveSeats = cinemaRoom.reserveConsecutiveSeats(5);
 
         // test
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(37);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(13);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(37);
+        assertThat(cinemaRoom.getReservedSeats()).hasSize(13);
 
         assertThat(reservedConsecutiveSeats).containsExactly(new Seat(2,1),
                                                             new Seat(2,2),
@@ -142,15 +142,15 @@ class CinemaRoomTest {
     @Test
     void reserveEntireRowOnce() {
         // build
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(50);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(0);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(50);
+        assertThat(cinemaRoom.getReservedSeats()).isEmpty();
 
         // operate
         List<Seat> reservedConsecutiveSeats = cinemaRoom.reserveConsecutiveSeats(10);
 
         // test
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(40);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(10);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(40);
+        assertThat(cinemaRoom.getReservedSeats()).hasSize(10);
 
         assertThat(reservedConsecutiveSeats).containsExactly(new Seat(1,1),
                                                             new Seat(1,2),
@@ -170,15 +170,15 @@ class CinemaRoomTest {
     void reserveEntireRowTwice() {
         // build
         cinemaRoom.reserveConsecutiveSeats(10);
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(40);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(10);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(40);
+        assertThat(cinemaRoom.getReservedSeats()).hasSize(10);
 
         // operate
         List<Seat> reservedConsecutiveSeats = cinemaRoom.reserveConsecutiveSeats(10);
 
         // test
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(30);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(20);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(30);
+        assertThat(cinemaRoom.getReservedSeats()).hasSize(20);
 
         assertThat(reservedConsecutiveSeats).containsExactly(new Seat(2,1),
                                                             new Seat(2,2),
@@ -196,8 +196,8 @@ class CinemaRoomTest {
     @Test
     void tryToReserveANumberOfConsecutiveSeatsThatIsBiggerThanTheRowLength() {
         // build
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(50);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(0);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(50);
+        assertThat(cinemaRoom.getReservedSeats()).isEmpty();
 
         // operate
         assertThatThrownBy(() -> cinemaRoom.reserveConsecutiveSeats(11))
@@ -205,8 +205,8 @@ class CinemaRoomTest {
                 .hasMessageContaining("Not enough consecutive seats available in any row");
 
         // test
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(50);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(0);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(50);
+        assertThat(cinemaRoom.getReservedSeats()).isEmpty();
     }
 
     @Test
@@ -215,15 +215,15 @@ class CinemaRoomTest {
         for (int i = 1; i<=4; i++){
             cinemaRoom.reserveConsecutiveSeats(10);
         }
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(10);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(40);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(10);
+        assertThat(cinemaRoom.getReservedSeats()).hasSize(40);
 
         // operate
         List<Seat> reservedConsecutiveSeats = cinemaRoom.reserveConsecutiveSeats(5);
 
         // test
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(5);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(45);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(5);
+        assertThat(cinemaRoom.getReservedSeats()).hasSize(45);
 
         assertThat(reservedConsecutiveSeats).containsExactly(new Seat(5,1),
                                                             new Seat(5,2),
@@ -241,15 +241,15 @@ class CinemaRoomTest {
         }
         cinemaRoom.reserveConsecutiveSeats(5);
         cinemaRoom.reserveConsecutiveSeats(4);
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(1);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(49);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(1);
+        assertThat(cinemaRoom.getReservedSeats()).hasSize(49);
 
         // operate
         List<Seat> reservedConsecutiveSeats = cinemaRoom.reserveConsecutiveSeats(1);
 
         // test
         assertThat(cinemaRoom.getAvailableSeats()).isEmpty();
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(50);
+        assertThat(cinemaRoom.getReservedSeats()).hasSize(50);
 
         assertThat(reservedConsecutiveSeats).containsExactly(new Seat(5,10));
         assertThat(cinemaRoom.getReservedSeats()).containsSequence(reservedConsecutiveSeats);
@@ -263,15 +263,15 @@ class CinemaRoomTest {
         cinemaRoom.reserveConsecutiveSeats(6);// 4 seats left on the 3th row
         cinemaRoom.reserveConsecutiveSeats(9);
         cinemaRoom.reserveConsecutiveSeats(8);
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(10);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(40);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(10);
+        assertThat(cinemaRoom.getReservedSeats()).hasSize(40);
 
         // operate
         List<Seat> reservedConsecutiveSeats = cinemaRoom.reserveConsecutiveSeats(3);
 
         // test
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(7);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(43);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(7);
+        assertThat(cinemaRoom.getReservedSeats()).hasSize(43);
 
         assertThat(reservedConsecutiveSeats).containsExactly(new Seat(3,7),
                 new Seat(3,8),
@@ -287,15 +287,15 @@ class CinemaRoomTest {
         cinemaRoom.reserveConsecutiveSeats(10);
         cinemaRoom.reserveConsecutiveSeats(10);
         cinemaRoom.reserveConsecutiveSeats(10);
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(1);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(49);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(1);
+        assertThat(cinemaRoom.getReservedSeats()).hasSize(49);
 
         // operate
         List<Seat> reservedConsecutiveSeats = cinemaRoom.reserveConsecutiveSeats(1);
 
         // test
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(0);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(50);
+        assertThat(cinemaRoom.getAvailableSeats()).isEmpty();
+        assertThat(cinemaRoom.getReservedSeats()).hasSize(50);
 
         assertThat(reservedConsecutiveSeats).containsExactly(new Seat(2,10));
         assertThat(cinemaRoom.getReservedSeats()).containsSequence(reservedConsecutiveSeats);
@@ -309,8 +309,8 @@ class CinemaRoomTest {
         }
         cinemaRoom.reserveConsecutiveSeats(5);
         cinemaRoom.reserveConsecutiveSeats(4);
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(1);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(49);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(1);
+        assertThat(cinemaRoom.getReservedSeats()).hasSize(49);
 
         // operate
         assertThatThrownBy(() -> cinemaRoom.reserveConsecutiveSeats(2))
@@ -318,8 +318,8 @@ class CinemaRoomTest {
                 .hasMessageContaining("Not enough consecutive seats available in any row");
 
         // test
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(1);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(49);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(1);
+        assertThat(cinemaRoom.getReservedSeats()).hasSize(49);
     }
 
     @Test
@@ -329,8 +329,8 @@ class CinemaRoomTest {
             cinemaRoom.reserveSeatByNumber(i, 1, 3);
             cinemaRoom.reserveSeatByNumber(i, 6, 3);
         }
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(20);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(30);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(20);
+        assertThat(cinemaRoom.getReservedSeats()).hasSize(30);
 
         // operate
         assertThatThrownBy(() -> cinemaRoom.reserveConsecutiveSeats(3))
@@ -338,15 +338,15 @@ class CinemaRoomTest {
                 .hasMessageContaining("Not enough consecutive seats available in any row");
 
         // test
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(20);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(30);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(20);
+        assertThat(cinemaRoom.getReservedSeats()).hasSize(30);
     }
 
     @Test
     void reserveZeroConsecutiveSeats() {
         // build
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(50);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(0);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(50);
+        assertThat(cinemaRoom.getReservedSeats()).isEmpty();
 
         // operate
         assertThatThrownBy(() -> cinemaRoom.reserveConsecutiveSeats(0))
@@ -354,15 +354,15 @@ class CinemaRoomTest {
                 .hasMessageContaining("Number of seats must be greater than zero");
 
         // test
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(50);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(0);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(50);
+        assertThat(cinemaRoom.getReservedSeats()).isEmpty();
     }
 
     @Test
     void reserveNegativeConsecutiveSeats() {
         // build
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(50);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(0);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(50);
+        assertThat(cinemaRoom.getReservedSeats()).isEmpty();
 
         // operate
         assertThatThrownBy(() -> cinemaRoom.reserveConsecutiveSeats(-1))
@@ -370,21 +370,21 @@ class CinemaRoomTest {
                 .hasMessageContaining("Number of seats must be greater than zero");
 
         // test
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(50);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(0);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(50);
+        assertThat(cinemaRoom.getReservedSeats()).isEmpty();
     }
 
     @Test
     void reserveBySeatNumber() {
         // build
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(50);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(0);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(50);
+        assertThat(cinemaRoom.getReservedSeats()).isEmpty();
 
         // operate
         List<Seat> reservedConsecutiveSeats = cinemaRoom.reserveSeatByNumber(3, 3, 3);
         // test
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(47);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(3);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(47);
+        assertThat(cinemaRoom.getReservedSeats()).hasSize(3);
 
         assertThat(reservedConsecutiveSeats).containsExactly(new Seat(3,3),
                                                         new Seat(3,4),
@@ -396,15 +396,15 @@ class CinemaRoomTest {
     @Test
     void reserveBySeatNumber_justEnoughSeatsOnTheRow() {
         // build
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(50);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(0);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(50);
+        assertThat(cinemaRoom.getReservedSeats()).isEmpty();
 
         // operate
         List<Seat> reservedConsecutiveSeats = cinemaRoom.reserveSeatByNumber(3, 5, 6);
 
         // test
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(44);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(6);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(44);
+        assertThat(cinemaRoom.getReservedSeats()).hasSize(6);
 
         assertThat(reservedConsecutiveSeats).containsExactly(new Seat(3,5),
                                         new Seat(3,6),
@@ -419,8 +419,8 @@ class CinemaRoomTest {
     @Test
     void reserveBySeatNumber_NotEnoughSeatsOnThatRow() {
         // build
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(50);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(0);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(50);
+        assertThat(cinemaRoom.getReservedSeats()).isEmpty();
 
         // operate
         assertThatThrownBy(() -> cinemaRoom.reserveSeatByNumber(3, 5, 7))
@@ -428,16 +428,16 @@ class CinemaRoomTest {
                 .hasMessageContaining("Not enough consecutive seats available starting from seat 5");
 
         // test
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(50);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(0);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(50);
+        assertThat(cinemaRoom.getReservedSeats()).isEmpty();
     }
 
     @Test
     void startSeatIsNotAvailable() {
         // build
         cinemaRoom.reserveSeatByNumber(3, 5, 1);
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(49);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(1);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(49);
+        assertThat(cinemaRoom.getReservedSeats()).hasSize(1);
 
         // operate
         assertThatThrownBy(() -> cinemaRoom.reserveSeatByNumber(3, 5, 3))
@@ -445,16 +445,16 @@ class CinemaRoomTest {
                 .hasMessageContaining("Not enough consecutive seats available starting from seat 5");
 
         // test
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(49);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(1);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(49);
+        assertThat(cinemaRoom.getReservedSeats()).hasSize(1);
     }
 
     @Test
     void startSeatNotAvailable_ButTheConsecutiveSeatsAreNot() {
         // build
         cinemaRoom.reserveSeatByNumber(3, 5, 2);
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(48);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(2);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(48);
+        assertThat(cinemaRoom.getReservedSeats()).hasSize(2);
 
         // operate
         assertThatThrownBy(() -> cinemaRoom.reserveSeatByNumber(3, 4, 3))
@@ -462,8 +462,8 @@ class CinemaRoomTest {
                 .hasMessageContaining("Not enough consecutive seats available starting from seat 4");
 
         // test
-        assertThat(cinemaRoom.getAvailableSeats().size()).isEqualTo(48);
-        assertThat(cinemaRoom.getReservedSeats().size()).isEqualTo(2);
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(48);
+        assertThat(cinemaRoom.getReservedSeats()).hasSize(2);
     }
 
     @Test
