@@ -53,7 +53,7 @@ public class CinemaRoom {
             row++;
         }
         if(consecutiveSeats.isEmpty()) {
-            throw new IllegalArgumentException("Not enough consecutive seats available in any row");
+            throw new NotEnoughConsecutiveSeatsInRowException();
         }
         return consecutiveSeats;
     }
@@ -77,7 +77,7 @@ public class CinemaRoom {
             if (availableSeatsInRow.contains(seat)) {
                 consecutiveSeats.add(seat);
             } else {
-                throw new IllegalArgumentException("Not enough consecutive seats available starting from seat " + startSeatNumber);
+                throw new NotEnoughConsecutiveSeatsInRowException(startSeatNumber);
             }
         }
 

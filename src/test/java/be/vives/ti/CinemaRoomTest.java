@@ -201,7 +201,7 @@ class CinemaRoomTest {
 
         // operate
         assertThatThrownBy(() -> cinemaRoom.reserveConsecutiveSeats(11))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(NotEnoughConsecutiveSeatsInRowException.class)
                 .hasMessageContaining("Not enough consecutive seats available in any row");
 
         // test
@@ -314,7 +314,7 @@ class CinemaRoomTest {
 
         // operate
         assertThatThrownBy(() -> cinemaRoom.reserveConsecutiveSeats(2))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(NotEnoughConsecutiveSeatsInRowException.class)
                 .hasMessageContaining("Not enough consecutive seats available in any row");
 
         // test
@@ -334,7 +334,7 @@ class CinemaRoomTest {
 
         // operate
         assertThatThrownBy(() -> cinemaRoom.reserveConsecutiveSeats(3))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(NotEnoughConsecutiveSeatsInRowException.class)
                 .hasMessageContaining("Not enough consecutive seats available in any row");
 
         // test
@@ -424,7 +424,7 @@ class CinemaRoomTest {
 
         // operate
         assertThatThrownBy(() -> cinemaRoom.reserveSeatByNumber(3, 5, 7))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(NotEnoughConsecutiveSeatsInRowException.class)
                 .hasMessageContaining("Not enough consecutive seats available starting from seat 5");
 
         // test
@@ -441,7 +441,7 @@ class CinemaRoomTest {
 
         // operate
         assertThatThrownBy(() -> cinemaRoom.reserveSeatByNumber(3, 5, 3))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(NotEnoughConsecutiveSeatsInRowException.class)
                 .hasMessageContaining("Not enough consecutive seats available starting from seat 5");
 
         // test
@@ -458,7 +458,7 @@ class CinemaRoomTest {
 
         // operate
         assertThatThrownBy(() -> cinemaRoom.reserveSeatByNumber(3, 4, 3))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(NotEnoughConsecutiveSeatsInRowException.class)
                 .hasMessageContaining("Not enough consecutive seats available starting from seat 4");
 
         // test
