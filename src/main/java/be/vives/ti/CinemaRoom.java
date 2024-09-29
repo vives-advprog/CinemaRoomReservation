@@ -1,6 +1,8 @@
 package be.vives.ti;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class CinemaRoom {
 
@@ -9,7 +11,7 @@ public class CinemaRoom {
     private final List<Seat> reservedSeats;
 
     public CinemaRoom(String movieName, int numberOfRows, int seatsPerRow) {
-        if(numberOfRows < 1 || seatsPerRow < 1) {
+        if (numberOfRows < 1 || seatsPerRow < 1) {
             throw new IllegalArgumentException("Number of rows and seats per row must be greater than 0");
         }
 
@@ -40,20 +42,48 @@ public class CinemaRoom {
             throw new IllegalArgumentException("Number of seats must be greater than zero");
         }
 
-        List<Seat> consecutiveSeats = new ArrayList<>();
+        List<Seat> reservedConsecutiveSeats = new ArrayList<>();
         int row = 1;
-        while (consecutiveSeats.isEmpty() && row <= getMaxRow()){
-            List<Seat> availableSeatsInRow = getAvailableSeatsInRow(row);
-            if (availableSeatsInRow.size() >= numberOfSeats) {
-                consecutiveSeats = findConsecutiveSeats(availableSeatsInRow, numberOfSeats);
-                if (!consecutiveSeats.isEmpty()) {
-                    reserveSeats(consecutiveSeats);
-                }
-            }
+        while (reservedConsecutiveSeats.isEmpty() && row <= getMaxRow()) {
+            reservedConsecutiveSeats = reserveConsecutiveSeatsInRow(numberOfSeats, row);
             row++;
         }
-        if(consecutiveSeats.isEmpty()) {
+        if (reservedConsecutiveSeats.isEmpty()) {
             throw new NotEnoughConsecutiveSeatsInRowException();
+        }
+        return reservedConsecutiveSeats;
+    }
+
+    private List<Seat> reserveConsecutiveSeatsInRow(int numberOfSeats, int row) {
+        List<Seat> availableSeatsInRow = getAvailableSeatsInRow(row);
+        List<Seat> consecutiveSeats = new ArrayList<>();
+        if (availableSeatsInRow.size() >= numberOfSeats) {
+            consecutiveSeats = findConsecutiveSeats(availableSeatsInRow, numberOfSeats);
+            if (!consecutiveSeats.isEmpty()) {
+                reserveSeats(consecutiveSeats);
+            }
+        }
+        return consecutiveSeats;
+    }
+
+    private List<Seat> findConsecutiveSeats(List<Seat> availableSeatsInRow, int numberOfSeats) {
+        List<Seat> consecutiveSeats = new ArrayList<>();
+        Collections.sort(availableSeatsInRow);
+
+        int firstSeatInConsecutiveRow = 0;
+        while (consecutiveSeats.isEmpty() && firstSeatInConsecutiveRow <= availableSeatsInRow.size() - numberOfSeats) {
+            boolean isConsecutive = true;
+            int numberOfConsecutiveSeatsFound = 0;
+            while (isConsecutive && numberOfConsecutiveSeatsFound < numberOfSeats - 1) {
+                if (availableSeatsInRow.get(firstSeatInConsecutiveRow + numberOfConsecutiveSeatsFound).getSeatNumber() + 1 != availableSeatsInRow.get(firstSeatInConsecutiveRow + numberOfConsecutiveSeatsFound + 1).getSeatNumber()) {
+                    isConsecutive = false;
+                }
+                numberOfConsecutiveSeatsFound++;
+            }
+            if (isConsecutive) {
+                consecutiveSeats.addAll(availableSeatsInRow.subList(firstSeatInConsecutiveRow, firstSeatInConsecutiveRow + numberOfSeats));
+            }
+            firstSeatInConsecutiveRow++;
         }
         return consecutiveSeats;
     }
@@ -105,32 +135,9 @@ public class CinemaRoom {
         return availableSeatsInRow;
     }
 
-    private List<Seat> findConsecutiveSeats(List<Seat> availableSeatsInRow, int numberOfSeats) {
-        List<Seat> consecutiveSeats = new ArrayList<>();
-        Collections.sort(availableSeatsInRow);
-
-        int i = 0;
-        while (consecutiveSeats.isEmpty() && i <= availableSeatsInRow.size() - numberOfSeats) {
-            boolean isConsecutive = true;
-            int j = 0;
-            while (isConsecutive &&  j < numberOfSeats - 1) {
-                if (availableSeatsInRow.get(i + j).getSeatNumber() + 1 != availableSeatsInRow.get(i + j + 1).getSeatNumber()) {
-                    isConsecutive = false;
-                }
-                j++;
-            }
-            if (isConsecutive) {
-                consecutiveSeats.addAll(availableSeatsInRow.subList(i, i + numberOfSeats));
-            }
-            i++;
-        }
-        return consecutiveSeats;
-    }
-
     private void reserveSeats(List<Seat> seatsToReserve) {
         reservedSeats.addAll(seatsToReserve);
         availableSeats.removeAll(seatsToReserve);
     }
-
 
 }

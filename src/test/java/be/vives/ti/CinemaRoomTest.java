@@ -17,7 +17,7 @@ class CinemaRoomTest {
     }
 
     @Test
-    void canCreateCinemaRoom(){
+    void canCreateCinemaRoom() {
         assertThat(cinemaRoom).isNotNull();
         assertThat(cinemaRoom.getMovieName()).isEqualTo("The Dark Knight");
         assertThat(cinemaRoom.getAvailableSeats()).hasSize(50);
@@ -65,11 +65,11 @@ class CinemaRoomTest {
         assertThat(cinemaRoom.getAvailableSeats()).hasSize(45);
         assertThat(cinemaRoom.getReservedSeats()).hasSize(5);
 
-        assertThat(reservedConsecutiveSeats).containsExactly(new Seat(1,1),
-                                                                new Seat(1,2),
-                                                                new Seat(1,3),
-                                                                new Seat(1,4),
-                                                                new Seat(1,5));
+        assertThat(reservedConsecutiveSeats).containsExactly(new Seat(1, 1),
+                new Seat(1, 2),
+                new Seat(1, 3),
+                new Seat(1, 4),
+                new Seat(1, 5));
         assertThat(cinemaRoom.getReservedSeats()).containsSequence(reservedConsecutiveSeats);
     }
 
@@ -87,9 +87,9 @@ class CinemaRoomTest {
         assertThat(cinemaRoom.getAvailableSeats()).hasSize(42);
         assertThat(cinemaRoom.getReservedSeats()).hasSize(8);
 
-        assertThat(reservedConsecutiveSeats).containsExactly(new Seat(1,6),
-                new Seat(1,7),
-                new Seat(1,8));
+        assertThat(reservedConsecutiveSeats).containsExactly(new Seat(1, 6),
+                new Seat(1, 7),
+                new Seat(1, 8));
         assertThat(cinemaRoom.getReservedSeats()).containsSequence(reservedConsecutiveSeats);
     }
 
@@ -107,16 +107,16 @@ class CinemaRoomTest {
         assertThat(cinemaRoom.getAvailableSeats()).hasSize(40);
         assertThat(cinemaRoom.getReservedSeats()).hasSize(10);
 
-        assertThat(reservedConsecutiveSeats).containsExactly(new Seat(1,6),
-                                                            new Seat(1,7),
-                                                            new Seat(1,8),
-                                                            new Seat(1,9),
-                                                            new Seat(1,10));
+        assertThat(reservedConsecutiveSeats).containsExactly(new Seat(1, 6),
+                new Seat(1, 7),
+                new Seat(1, 8),
+                new Seat(1, 9),
+                new Seat(1, 10));
         assertThat(cinemaRoom.getReservedSeats()).containsSequence(reservedConsecutiveSeats);
     }
 
     @Test
-    void reserveTheNextConsecutiveSeats_NoSpaceAnymoreInTheRow_ReserveInNextRow() {
+    void reserveTheNextConsecutiveSeats_NoSpaceAnymoreInTheRow_ReserveAllInNextRow() {
         // build
         cinemaRoom.reserveConsecutiveSeats(8);
         assertThat(cinemaRoom.getAvailableSeats()).hasSize(42);
@@ -129,13 +129,12 @@ class CinemaRoomTest {
         assertThat(cinemaRoom.getAvailableSeats()).hasSize(37);
         assertThat(cinemaRoom.getReservedSeats()).hasSize(13);
 
-        assertThat(reservedConsecutiveSeats).containsExactly(new Seat(2,1),
-                                                            new Seat(2,2),
-                                                            new Seat(2,3),
-                                                            new Seat(2,4),
-                                                            new Seat(2,5));
+        assertThat(reservedConsecutiveSeats).containsExactly(new Seat(2, 1),
+                new Seat(2, 2),
+                new Seat(2, 3),
+                new Seat(2, 4),
+                new Seat(2, 5));
         assertThat(cinemaRoom.getReservedSeats()).containsSequence(reservedConsecutiveSeats);
-
 
     }
 
@@ -152,16 +151,16 @@ class CinemaRoomTest {
         assertThat(cinemaRoom.getAvailableSeats()).hasSize(40);
         assertThat(cinemaRoom.getReservedSeats()).hasSize(10);
 
-        assertThat(reservedConsecutiveSeats).containsExactly(new Seat(1,1),
-                                                            new Seat(1,2),
-                                                            new Seat(1,3),
-                                                            new Seat(1,4),
-                                                            new Seat(1,5),
-                                                            new Seat(1,6),
-                                                            new Seat(1,7),
-                                                            new Seat(1,8),
-                                                            new Seat(1,9),
-                                                            new Seat(1,10));
+        assertThat(reservedConsecutiveSeats).containsExactly(new Seat(1, 1),
+                new Seat(1, 2),
+                new Seat(1, 3),
+                new Seat(1, 4),
+                new Seat(1, 5),
+                new Seat(1, 6),
+                new Seat(1, 7),
+                new Seat(1, 8),
+                new Seat(1, 9),
+                new Seat(1, 10));
         assertThat(cinemaRoom.getReservedSeats()).containsSequence(reservedConsecutiveSeats);
 
     }
@@ -180,16 +179,16 @@ class CinemaRoomTest {
         assertThat(cinemaRoom.getAvailableSeats()).hasSize(30);
         assertThat(cinemaRoom.getReservedSeats()).hasSize(20);
 
-        assertThat(reservedConsecutiveSeats).containsExactly(new Seat(2,1),
-                                                            new Seat(2,2),
-                                                            new Seat(2,3),
-                                                            new Seat(2,4),
-                                                            new Seat(2,5),
-                                                            new Seat(2,6),
-                                                            new Seat(2,7),
-                                                            new Seat(2,8),
-                                                            new Seat(2,9),
-                                                            new Seat(2,10));
+        assertThat(reservedConsecutiveSeats).containsExactly(new Seat(2, 1),
+                new Seat(2, 2),
+                new Seat(2, 3),
+                new Seat(2, 4),
+                new Seat(2, 5),
+                new Seat(2, 6),
+                new Seat(2, 7),
+                new Seat(2, 8),
+                new Seat(2, 9),
+                new Seat(2, 10));
         assertThat(cinemaRoom.getReservedSeats()).containsSequence(reservedConsecutiveSeats);
     }
 
@@ -212,7 +211,7 @@ class CinemaRoomTest {
     @Test
     void onlySpaceLeftOnTheLastRow() {
         // build
-        for (int i = 1; i<=4; i++){
+        for (int i = 1; i <= 4; i++) {
             cinemaRoom.reserveConsecutiveSeats(10);
         }
         assertThat(cinemaRoom.getAvailableSeats()).hasSize(10);
@@ -225,18 +224,18 @@ class CinemaRoomTest {
         assertThat(cinemaRoom.getAvailableSeats()).hasSize(5);
         assertThat(cinemaRoom.getReservedSeats()).hasSize(45);
 
-        assertThat(reservedConsecutiveSeats).containsExactly(new Seat(5,1),
-                                                            new Seat(5,2),
-                                                            new Seat(5,3),
-                                                            new Seat(5,4),
-                                                            new Seat(5,5));
+        assertThat(reservedConsecutiveSeats).containsExactly(new Seat(5, 1),
+                new Seat(5, 2),
+                new Seat(5, 3),
+                new Seat(5, 4),
+                new Seat(5, 5));
         assertThat(cinemaRoom.getReservedSeats()).containsSequence(reservedConsecutiveSeats);
     }
 
     @Test
     void reserveTheLastSeatOnTheLastRow() {
         // build
-        for (int i = 1; i<=4; i++){
+        for (int i = 1; i <= 4; i++) {
             cinemaRoom.reserveConsecutiveSeats(10);
         }
         cinemaRoom.reserveConsecutiveSeats(5);
@@ -251,7 +250,7 @@ class CinemaRoomTest {
         assertThat(cinemaRoom.getAvailableSeats()).isEmpty();
         assertThat(cinemaRoom.getReservedSeats()).hasSize(50);
 
-        assertThat(reservedConsecutiveSeats).containsExactly(new Seat(5,10));
+        assertThat(reservedConsecutiveSeats).containsExactly(new Seat(5, 10));
         assertThat(cinemaRoom.getReservedSeats()).containsSequence(reservedConsecutiveSeats);
     }
 
@@ -273,9 +272,9 @@ class CinemaRoomTest {
         assertThat(cinemaRoom.getAvailableSeats()).hasSize(7);
         assertThat(cinemaRoom.getReservedSeats()).hasSize(43);
 
-        assertThat(reservedConsecutiveSeats).containsExactly(new Seat(3,7),
-                new Seat(3,8),
-                new Seat(3,9));
+        assertThat(reservedConsecutiveSeats).containsExactly(new Seat(3, 7),
+                new Seat(3, 8),
+                new Seat(3, 9));
         assertThat(cinemaRoom.getReservedSeats()).containsSequence(reservedConsecutiveSeats);
     }
 
@@ -297,14 +296,14 @@ class CinemaRoomTest {
         assertThat(cinemaRoom.getAvailableSeats()).isEmpty();
         assertThat(cinemaRoom.getReservedSeats()).hasSize(50);
 
-        assertThat(reservedConsecutiveSeats).containsExactly(new Seat(2,10));
+        assertThat(reservedConsecutiveSeats).containsExactly(new Seat(2, 10));
         assertThat(cinemaRoom.getReservedSeats()).containsSequence(reservedConsecutiveSeats);
     }
 
     @Test
     void reserveTwoSeatsButOnlyOneLeft() {
         // build
-        for (int i = 1; i<=4; i++){
+        for (int i = 1; i <= 4; i++) {
             cinemaRoom.reserveConsecutiveSeats(10);
         }
         cinemaRoom.reserveConsecutiveSeats(5);
@@ -386,9 +385,9 @@ class CinemaRoomTest {
         assertThat(cinemaRoom.getAvailableSeats()).hasSize(47);
         assertThat(cinemaRoom.getReservedSeats()).hasSize(3);
 
-        assertThat(reservedConsecutiveSeats).containsExactly(new Seat(3,3),
-                                                        new Seat(3,4),
-                                                        new Seat(3,5));
+        assertThat(reservedConsecutiveSeats).containsExactly(new Seat(3, 3),
+                new Seat(3, 4),
+                new Seat(3, 5));
         assertThat(cinemaRoom.getReservedSeats()).containsSequence(reservedConsecutiveSeats);
 
     }
@@ -406,12 +405,12 @@ class CinemaRoomTest {
         assertThat(cinemaRoom.getAvailableSeats()).hasSize(44);
         assertThat(cinemaRoom.getReservedSeats()).hasSize(6);
 
-        assertThat(reservedConsecutiveSeats).containsExactly(new Seat(3,5),
-                                        new Seat(3,6),
-                                        new Seat(3,7),
-                                        new Seat(3,8),
-                                        new Seat(3,9),
-                                        new Seat(3,10));
+        assertThat(reservedConsecutiveSeats).containsExactly(new Seat(3, 5),
+                new Seat(3, 6),
+                new Seat(3, 7),
+                new Seat(3, 8),
+                new Seat(3, 9),
+                new Seat(3, 10));
         assertThat(cinemaRoom.getReservedSeats()).containsSequence(reservedConsecutiveSeats);
 
     }
@@ -507,6 +506,5 @@ class CinemaRoomTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("Number of seats must be greater than zero");
     }
-
 
 }
