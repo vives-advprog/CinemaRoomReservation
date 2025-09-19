@@ -1,5 +1,6 @@
 package be.vives.ti;
 
+import be.vives.ti.exceptions.NotEnoughConsecutiveSeatsInRowException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -505,6 +506,39 @@ class CinemaRoomTest {
         assertThatThrownBy(() -> cinemaRoom.reserveSeatByNumber(5, 5, -3))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("Number of seats must be greater than zero");
+    }
+
+    @Test
+    void resetEmptyCinemaRoom() {
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(50);
+        assertThat(cinemaRoom.getReservedSeats()).isEmpty();
+
+        cinemaRoom.reset();
+
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(50);
+        assertThat(cinemaRoom.getReservedSeats()).isEmpty();
+    }
+
+    @Test
+    void resetCinemaRoomWithSeatsReserved() {
+        cinemaRoom.reserveSeatByNumber(1, 1, 1);
+        cinemaRoom.reserveSeatByNumber(1, 2, 1);
+        cinemaRoom.reserveSeatByNumber(1, 3, 1);
+
+        cinemaRoom.reserveConsecutiveSeats(10);
+        cinemaRoom.reserveConsecutiveSeats(10);
+
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(27);
+        assertThat(cinemaRoom.getReservedSeats()).hasSize(23);
+
+        System.out.println(cinemaRoom.getAvailableSeats().size());
+        System.out.println(cinemaRoom.getReservedSeats().size());
+
+        cinemaRoom.reset();
+
+        assertThat(cinemaRoom.getAvailableSeats()).hasSize(50);
+        assertThat(cinemaRoom.getReservedSeats()).isEmpty();
+
     }
 
 }

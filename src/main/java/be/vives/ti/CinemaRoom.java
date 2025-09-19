@@ -1,5 +1,7 @@
 package be.vives.ti;
 
+import be.vives.ti.exceptions.NotEnoughConsecutiveSeatsInRowException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -64,6 +66,11 @@ public class CinemaRoom {
             }
         }
         return consecutiveSeats;
+    }
+
+    public void reset() {
+        availableSeats.addAll(reservedSeats);
+        reservedSeats.clear();
     }
 
     private List<Seat> findConsecutiveSeats(List<Seat> availableSeatsInRow, int numberOfSeats) {
@@ -138,6 +145,15 @@ public class CinemaRoom {
     private void reserveSeats(List<Seat> seatsToReserve) {
         reservedSeats.addAll(seatsToReserve);
         availableSeats.removeAll(seatsToReserve);
+    }
+
+    @Override
+    public String toString() {
+        return "CinemaRoom{" +
+                "movieName='" + movieName + '\'' +
+                ", availableSeats=" + availableSeats +
+                ", reservedSeats=" + reservedSeats +
+                '}';
     }
 
 }

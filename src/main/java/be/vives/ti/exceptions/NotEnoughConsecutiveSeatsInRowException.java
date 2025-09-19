@@ -1,4 +1,4 @@
-package be.vives.ti;
+package be.vives.ti.exceptions;
 
 public class NotEnoughConsecutiveSeatsInRowException extends RuntimeException {
 
