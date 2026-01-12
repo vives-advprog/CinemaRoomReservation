@@ -33,6 +33,8 @@ Kwaliteit staat voorop! De `CinemaRoomTest` suite bevat uitgebreide tests met **
 *   ✅ Verificatie van edge cases en foutmeldingen.
 *   🎓 Ideaal als leervoorbeeld voor studenten om professionele unit tests te leren schrijven.
 
+![Coverage](.github/badges/jacoco.svg)
+
 ---
 
 
