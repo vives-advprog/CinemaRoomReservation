@@ -1,4 +1,4 @@
-name: GitHub Classroom Workflow
+name: Test Coverage Workflow
 
 on: [push]
 
@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   build:
-    name: Autograding
+    name: test-coverage-check
     runs-on: ubuntu-latest
 
     steps:
@@ -44,5 +44,3 @@ jobs:
         with:
           default_author: github_actions
           message: "Update JaCoCo coverage badge"
-
-      - uses: education/autograding@v1
